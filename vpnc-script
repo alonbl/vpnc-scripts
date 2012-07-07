@@ -738,7 +738,9 @@ do_disconnect() {
 			$IPROUTE -6 addr del $INTERNAL_IP6_NETMASK dev $TUNDEV
 		fi
 	fi
+}
 
+destroy() {
 	destroy_tun_device
 }
 
@@ -766,6 +768,10 @@ case "$reason" in
 		;;
 	reconnect)
 		run_hooks reconnect
+		;;
+	destroy)
+		run_hooks destroy
+		do_destroy
 		;;
 	*)
 		echo "unknown reason '$reason'. Maybe vpnc-script is out of date" 1>&2
